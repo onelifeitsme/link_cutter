@@ -20,6 +20,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -32,6 +33,7 @@
       <option name="presentableId" value="Default" />
       <updated>1641142173065</updated>
       <workItem from="1641142203575" duration="398000" />
+      <workItem from="1641142632668" duration="549000" />
     </task>
     <servers />
   </component>
@@ -39,9 +41,17 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1641142569198">
+    <state x="461" y="164" key="SettingsEditor" timestamp="1641143182268">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1641142569198" />
+    <state x="461" y="164" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1641143182268" />
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1641142888071">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1641142888071" />
+    <state x="754" y="421" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1641142932906">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="754" y="421" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1641142932906" />
   </component>
 </project>
