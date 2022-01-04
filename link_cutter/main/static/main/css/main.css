@@ -8,3 +8,29 @@ body {
     padding: 10px;
     margin: 10px;
 }
+
+#contenblock {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    margin: 10px;
+}
+
+#additionalblock {
+    padding: 10px;
+    margin: 10px;
+}
+
+#shorted_url_block {
+    border-style: solid;
+    padding: 8px;
+}
+
+#login {
+    right: 5%;
+    justify-content: right;
+    padding-left: 95%;
+
+
+
+}

@@ -1,23 +1,25 @@
 {% extends 'main/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Войти</title>
-</head>
-<body>
+{% block title %}
+<title>Войти</title>
+{% endblock %}
 {% block header %}
 <div id="header">
     <h1 id="headername">Авторизация</h1>
 </div>
+{% endblock %}
+{% block login %}
 {% endblock %}
 {% block maincontent %}
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Войти</button>
+        <a href="{% url 'registration' %}">
+<button type="button">
+    Зарегистрироваться
+</button>
+    </a>
 </form>
 {% endblock %}
-</body>
-</html>
+

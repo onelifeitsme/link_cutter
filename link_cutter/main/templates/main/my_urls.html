@@ -13,8 +13,17 @@
 </div>
 {% endblock %}
 {% block maincontent %}
+<a href="{% url 'cut' %}">
+<button>
+    Сократить новые ссылки
+</button>
+    </a>
+{% endblock %}
+{% block additional %}
 {% for url in urls %}
-<p>{{ url.full_url }} = {{ url.url_hash }}</p>
+<div id="shorted_url_block">
+<h3>{{ url.full_url }} = {{ url.url_hash }}</h3>
+</div>
 {% endfor %}
 {% endblock %}
 </body>

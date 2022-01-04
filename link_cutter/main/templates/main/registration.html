@@ -12,12 +12,22 @@
     <h1 id="headername">Регистрация</h1>
 </div>
 {% endblock %}
+{% block login %}
+{% endblock %}
 {% block maincontent %}
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Зарегистрироваться</button>
+    <a href="{% url 'login' %}">
+<button type="button">
+    Войти
+</button>
+    </a>
 </form>
+{% endblock %}
+{% block additional %}
+
 {% endblock %}
 </body>
 </html>

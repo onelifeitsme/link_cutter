@@ -3,7 +3,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    {% block title %}
     <title>Title</title>
+    {% endblock %}
     <link type='text/css' href="{% static 'main/css/main.css' %}" rel='stylesheet'/>
 </head>
 <body>
@@ -12,8 +14,22 @@
     <h1 id="headername">Заголовок хедера</h1>
 </div>
 {% endblock %}
+{% block login %}
+<div id="login">
+    <h2 id="username">{{ user }}</h2>
+    <a href="{% url 'logout' %}">
+    <button>Выйти</button>
+    </a>
+</div>
+{% endblock %}
+<div id="contenblock">
 {% block maincontent %}
 Главный контент страницы
 {% endblock %}
+</div>
+<div id="additionalblock">
+{% block additional %}
+{% endblock %}
+</div>
 </body>
 </html>

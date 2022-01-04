@@ -1,29 +1,80 @@
 {% extends 'main/base.html' %}
 {% load static %}
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Сократить ссылку</title>
+    <title>Title</title>
 </head>
 <body>
 {% block header %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <div id="header">
-    <h1 id="headername">Сократте вашу ссылку</h1>
+    <h1 id="headername">Сократите вашу ссылку</h1>
 </div>
+
 {% endblock %}
-<h1>{{ user }}</h1>
 
 {% block maincontent %}
-<a href="{% url 'my_urls' %}">Мои ссылки</a>
-
-
-<form method="POST">
+<form id='post_form' method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit">Сократить</input>
+        <button type="submit">Сократить</button>
     </form>
-<h1>{{ nick }}</h1>
+
+
+
+      <div id="output">
+      </div>
+      <script>
+         $('#post_form').on('submit', function(e){
+
+         e.preventDefault();
+
+           $.ajax({
+                type : "POST",
+                url: "{% url 'ajax_posting' %}",
+                data: {
+                 full_url : $('#id_full_url').val(),
+                 csrfmiddlewaretoken: '{{ csrf_token }}',
+                 dataType: "json",
+
+                },
+
+                success: function(data){
+                   $('#full_link').html(data.full_url)
+                   $('#hash').html(data.url_hash) /* response message */
+                },
+
+                failure: function() {
+
+                }
+
+
+            });
+
+
+                 });
+      </script>
 {% endblock %}
+
+{% block additional %}
+
+<div id="urls_resutl">
+      <h1>Полная ссылка:</h1>
+      <h1 id="full_link"></h1>
+
+      <h1>Сокращённая ссылка:</h1>
+      <h1 id="hash"></h1>
+      </div>
+<h2>
+<a href="{% url 'my_urls' %}">Мои ссылки</a>
+{% endblock %}
+    </h2>
+
+
 </body>
 </html>
+
+
+
