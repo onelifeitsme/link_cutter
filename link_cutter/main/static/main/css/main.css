@@ -1,0 +1,10 @@
+body {
+    background: rgba(229,255,227,0.84);
+}
+
+#header {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    margin: 10px;
+}

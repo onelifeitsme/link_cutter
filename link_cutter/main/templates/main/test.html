@@ -1,0 +1,69 @@
+{% extends 'main/base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block header %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<div id="header">
+    <h1 id="headername">Тест</h1>
+</div>
+{% endblock %}
+{% block maincontent %}
+<form id="form" method="POST">
+         <input id="first_name" type="text" name="title">
+         <input id="last_name" type="text" name="lang">
+         <input  type="submit" name="submit" value="submit">
+      </form>
+      <h1>Ваше имя:</h1>
+      <h1 id="hisname"></h1>
+      <h1>Ваша фамилия:</h1>
+      <h1 id="hislastname"></h1>
+      <h1>Хэш:</h1>
+      <h1 id="hash"></h1>
+      <h1>{{ sperma }}</h1>
+      <div id="output">
+      </div>
+      <script>
+         $('#form').on('submit', function(e){
+
+         e.preventDefault();
+
+           $.ajax({
+                type : "POST",
+                url: "{% url 'ajax_posting' %}",
+                data: {
+                 first_name : $('#first_name').val(),
+                 last_name : $('#last_name').val(),
+                 go : $('#hash').val(),
+                 csrfmiddlewaretoken: '{{ csrf_token }}',
+                 dataType: "json",
+
+                },
+
+                success: function(data){
+                   $('#output').html(data.msg)
+                   $('#hisname').html(data.first_name)
+                   $('#hislastname').html(data.last_name)
+                   $('#hash').html(data.url_hash) /* response message */
+                },
+
+                failure: function() {
+
+                }
+
+
+            });
+
+
+                 });
+      </script>
+{% endblock %}
+</body>
+</html>
+
+

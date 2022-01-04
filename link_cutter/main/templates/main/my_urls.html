@@ -1,0 +1,21 @@
+{% extends 'main/base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Мои ссылки</title>
+</head>
+<body>
+{% block header %}
+<div id="header">
+    <h1 id="headername">Ранее сокращённые вами ссылки</h1>
+</div>
+{% endblock %}
+{% block maincontent %}
+{% for url in urls %}
+<p>{{ url.full_url }} = {{ url.url_hash }}</p>
+{% endfor %}
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+</head>
+<body>
+{% block header %}
+<div id="header">
+    <h1 id="headername">Регистрация</h1>
+</div>
+{% endblock %}
+{% block maincontent %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Зарегистрироваться</button>
+</form>
+{% endblock %}
+</body>
+</html>
