@@ -6,8 +6,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.views.generic import FormView
 from .forms import LinkCutterForm
-from .models import Url
-
+from .models import Url, domain
 
 # ПРЕДСТАВЛЕНИЕ СТРАНИЦЫ РЕГИСТРАЦИИ
 class RegisterUserView(FormView):
@@ -42,7 +41,7 @@ class Logout(LogoutView):
 def cutview(request):
     if request.user.is_authenticated == True:
         form = LinkCutterForm
-        return render(request, 'main/cut.html', {'form': form})
+        return render(request, 'main/cut.html', {'form': form, 'domain': domain})
     else:
         return redirect("login")
 
@@ -78,15 +77,15 @@ def users_urls(request):
     if request.user.is_authenticated == True:
         user = request.user
         urls = Url.objects.filter(user=user)
-        return render(request, 'main/my_urls.html', {'urls': urls})
+        return render(request, 'main/my_urls.html', {'urls': urls, 'domain': domain})
     else:
         return redirect("login")
 
 
 # ПРЕДСТАВЛЕНИЕ РЕДИРЕКТА НА ОРИГИНАЛЬНУЮ ССЫЛКУ
 def get_existing_short_url(request, str):
-    url = Url.objects.filter(url_hash=str).first()
-    print(url)
+    url_hash = domain + str
+    url = Url.objects.filter(url_hash=url_hash).first()
     return redirect(url.full_url)
 
 

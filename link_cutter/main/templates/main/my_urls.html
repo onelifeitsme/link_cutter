@@ -22,7 +22,7 @@
 {% block additional %}
 {% for url in urls %}
 <div id="shorted_url_block">
-<h3>{{ url.full_url }} = {{ url.url_hash }}</h3>
+<h1>{{ url.full_url }}<br>{{ url.url_hash }}</h1>
 </div>
 {% endfor %}
 {% endblock %}
