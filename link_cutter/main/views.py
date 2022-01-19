@@ -1,12 +1,12 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.db import IntegrityError
-from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.views.generic import FormView
 from .forms import LinkCutterForm
 from .models import Url, domain
+
 
 # ПРЕДСТАВЛЕНИЕ СТРАНИЦЫ РЕГИСТРАЦИИ
 class RegisterUserView(FormView):
@@ -16,10 +16,12 @@ class RegisterUserView(FormView):
 
     def form_valid(self, form):
         form.save()
+        print(form.instance)
         return super(RegisterUserView, self).form_valid(form)
 
     def form_invalid(self, form):
         return super(RegisterUserView, self).form_invalid(form)
+
 
 
 # ПРЕДСТАВЛЕНИЕ СТРАНИЦЫ АВТОРИЗАЦИИ
@@ -38,38 +40,33 @@ class Logout(LogoutView):
 
 
 # ПРЕДСТАВЛЕНИЕ СТРАНИЦЫ СОКРАЩЕНИЯ ССЫЛКИ
-def cutview(request):
-    if request.user.is_authenticated == True:
-        form = LinkCutterForm
-        return render(request, 'main/cut.html', {'form': form, 'domain': domain})
-    else:
-        return redirect("login")
+class CutView(LoginRequiredMixin, FormView):
+    form_class = LinkCutterForm
+    template_name = 'main/cut.html'
 
 
-
-# СОЗДАНИЕ ОБЪЕКТА ССЫЛКИ В БАЗУ ДАННЫХ И ВЫВОД В HTML С ПОМОЩЬЮ AJAX
-def ajax_posting(request):
-    if request.is_ajax():
+    def post(self, request, *args, **kwargs):
         user = request.user
-        full_url = request.POST.get('full_url', None)
-        if full_url:
-            try:
-                Url.objects.create(
-                    full_url=full_url,
-                    user=user,
-                )
-            except IntegrityError:
-                print('такая ссылка уже существует')
+        form = LinkCutterForm(request.POST)
+        if form.is_valid():
+            full_url = form.cleaned_data['full_url']
+            if full_url:
+                try:
+                    Url.objects.create(
+                        full_url=full_url,
+                        user=user,
+                    )
+                except IntegrityError:
+                    print('такая ссылка уже существует')
+                url_hash = Url.objects.filter(full_url=full_url).first().url_hash
 
-            url_hash = Url.objects.filter(full_url=full_url).first().url_hash
+        return render(request, 'main/cut.html', {
+                            'form': form,
+                            'full_url': full_url,
+                            'url_hash': url_hash,
+                            'zalupa': 'hui'
+                })
 
-
-            response = {
-                         'msg':'Your form has been submitted successfully',
-                         'full_url': full_url,
-                         'url_hash': url_hash
-            }
-            return JsonResponse(response)
 
 
 # ПРЕДСТАВЛЕНИЕ СТРАНИЦЫ ПРОСМОТРА СВОИХ ССЫЛОК

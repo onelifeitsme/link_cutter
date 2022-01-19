@@ -8,7 +8,7 @@
 </head>
 <body>
 {% block header %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <div id="header">
     <h1 id="headername">Сократите вашу ссылку</h1>
 </div>
@@ -24,48 +24,17 @@
 
 
 
-      <div id="output">
-      </div>
-      <script>
-         $('#post_form').on('submit', function(e){
 
-         e.preventDefault();
-
-           $.ajax({
-                type : "POST",
-                url: "{% url 'ajax_posting' %}",
-                data: {
-                 full_url : $('#id_full_url').val(),
-                 csrfmiddlewaretoken: '{{ csrf_token }}',
-                 dataType: "json",
-
-                },
-
-                success: function(data){
-                   $('#full_link').html(data.full_url)
-                   $('#hash').html(data.url_hash) /* response message */
-                },
-
-                failure: function() {
-
-                }
-
-
-            });
-
-
-                 });
-      </script>
 {% endblock %}
 
 {% block additional %}
 
 <div id="urls_resutl">
       <h1>Полная ссылка:</h1>
-      <h1 id="full_link"></h1>
-
+      <h1>{{ full_url }}</h1>
+            {{ zalupa }}
       <h1>Сокращённая ссылка:</h1>
-      <h1 id="hash"></h1>
+      <h1>{{ url_hash }}</h1>
       </div>
 <h2>
 <a href="{% url 'my_urls' %}">Мои ссылки</a>
