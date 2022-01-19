@@ -64,7 +64,6 @@ class CutView(LoginRequiredMixin, FormView):
                             'form': form,
                             'full_url': full_url,
                             'url_hash': url_hash,
-                            'zalupa': 'hui'
                 })
 
 
