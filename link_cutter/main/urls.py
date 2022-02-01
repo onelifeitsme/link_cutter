@@ -9,4 +9,3 @@ urlpatterns = [
     path('my_urls', users_urls, name='my_urls'),
     path('<str>', get_existing_short_url, name='get_existing_short_url'),
 ]
-

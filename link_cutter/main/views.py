@@ -8,8 +8,8 @@ from .forms import LinkCutterForm
 from .models import Url, domain
 
 
-# ПРЕДСТАВЛЕНИЕ СТРАНИЦЫ РЕГИСТРАЦИИ
 class RegisterUserView(FormView):
+    """Представление страницы регистрации"""
     form_class = UserCreationForm
     template_name = 'main/registration.html'
     success_url = '/login'
@@ -23,9 +23,8 @@ class RegisterUserView(FormView):
         return super(RegisterUserView, self).form_invalid(form)
 
 
-
-# ПРЕДСТАВЛЕНИЕ СТРАНИЦЫ АВТОРИЗАЦИИ
 class LoginUserView(LoginView):
+    """Представление страницы аутентификации"""
     form_class = AuthenticationForm
     template_name = 'main/login.html'
     success_url = '/'
@@ -34,16 +33,15 @@ class LoginUserView(LoginView):
         return self.success_url
 
 
-# ПРАДСТАВЛЕНИЕ ЛОГАУТА
 class Logout(LogoutView):
+    """Представление логаута"""
     next_page = '/login'
 
 
-# ПРЕДСТАВЛЕНИЕ СТРАНИЦЫ СОКРАЩЕНИЯ ССЫЛКИ
 class CutView(LoginRequiredMixin, FormView):
+    """Представление страницы сокращения ссылки"""
     form_class = LinkCutterForm
     template_name = 'main/cut.html'
-
 
     def post(self, request, *args, **kwargs):
         user = request.user
@@ -61,16 +59,15 @@ class CutView(LoginRequiredMixin, FormView):
                 url_hash = Url.objects.filter(full_url=full_url).first().url_hash
 
         return render(request, 'main/cut.html', {
-                            'form': form,
-                            'full_url': full_url,
-                            'url_hash': url_hash,
-                })
+            'form': form,
+            'full_url': full_url,
+            'url_hash': url_hash,
+        })
 
 
-
-# ПРЕДСТАВЛЕНИЕ СТРАНИЦЫ ПРОСМОТРА СВОИХ ССЫЛОК
 def users_urls(request):
-    if request.user.is_authenticated == True:
+    """Представление страницы просмотра своих ссылок"""
+    if request.user.is_authenticated is True:
         user = request.user
         urls = Url.objects.filter(user=user)
         return render(request, 'main/my_urls.html', {'urls': urls, 'domain': domain})
@@ -78,11 +75,8 @@ def users_urls(request):
         return redirect("login")
 
 
-# ПРЕДСТАВЛЕНИЕ РЕДИРЕКТА НА ОРИГИНАЛЬНУЮ ССЫЛКУ
 def get_existing_short_url(request, str):
+    """Представление редиректа на оригинальную ссылку"""
     url_hash = domain + str
     url = Url.objects.filter(url_hash=url_hash).first()
     return redirect(url.full_url)
-
-
-
